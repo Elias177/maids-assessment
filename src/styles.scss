@@ -1,0 +1,76 @@
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "themes/colors";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Raleway, "Helvetica Neue", sans-serif; }
+
+.content-wrapper {
+  padding-left: calc(64px + 1.5625vw);
+  padding-right: calc(64px + 1.5625vw);
+}
+
+@media (max-width:1024px) {
+  .content-wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+//Scrollbar styles
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $maids-blue;
+  opacity: 0.6;
+  border-radius: 16px;
+}
+
+/*
+  Global Animations Start
+ */
+
+@-webkit-keyframes fade-out-left {
+  0% {
+    -webkit-transform:translateX(0);
+    transform:translateX(0);
+    opacity:1
+  }
+  100% {
+    -webkit-transform:translateX(-50px);
+    transform:translateX(-50px);
+    opacity:0;
+    display: none
+  }
+}
+
+@keyframes fade-out-left {
+  0% {
+    -webkit-transform:translateX(0);
+    transform:translateX(0);
+    opacity:1;
+  }
+  100% {
+    -webkit-transform:translateX(-50px);
+    transform:translateX(-50px);
+    opacity:0;
+    display: none;
+  }
+}
+.fade-out-left {
+  -webkit-animation:fade-out-left .1s cubic-bezier(.25,.46,.45,.94) both;
+  animation:fade-out-left .1s cubic-bezier(.25,.46,.45,.94) both;
+}
+
+/*
+  Global Animations End
+ */

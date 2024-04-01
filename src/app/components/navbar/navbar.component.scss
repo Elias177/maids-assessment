@@ -1,0 +1,33 @@
+@import '../../../themes/colors';
+
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: $maids-gray;
+  height: 4rem;
+  border-color: $maids-blue;
+  z-index: 2;
+}
+
+.search-bar {
+  position: absolute;
+  width: 100%;
+  padding: 10px 3rem;
+  border-radius: 26px;
+  z-index: 0;
+}
+
+.search-bar-icon {
+  position: absolute;
+  z-index: 2;
+  padding-left: 1rem;
+  width: fit-content;
+
+  &.close {
+    right: 0;
+    padding-right: 1rem;
+    cursor: pointer;
+  }
+
+}

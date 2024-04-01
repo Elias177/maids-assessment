@@ -1,0 +1,9 @@
+<div class="grid grid-rows-1 sm:grid-rows-2 grid-flow-row sm:grid-flow-col gap-4">
+
+  <ng-container *ngFor="let user of users">
+
+    <app-user-card [user]="user"></app-user-card>
+
+  </ng-container>
+
+</div>

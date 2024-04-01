@@ -1,0 +1,17 @@
+<div class="navbar py-4 sm:py-12">
+
+  <div class="content-wrapper flex flew-row items-center gap-4 sm:gap-6 h-full">
+
+    <div [class.fade-out-left]="isTyping">
+      <img class="relative hidden sm:block" ngSrc="assets/logos/maids-logo.svg" width="245" height="72" alt="Maids.cc">
+      <img class="relative block sm:hidden" ngSrc="assets/logos/logo.svg" width="50" height="48" alt="Maids.cc">
+    </div>
+
+    <div class="relative w-full flex flex-row items-center">
+      <mat-icon class="search-bar-icon search" matIconPrefix>search</mat-icon>
+      <input (focus)="typing(true)" (blur)="typing(false)" class="search-bar" type="text" placeholder="Search...">
+      <mat-icon class="search-bar-icon close" matIconPrefix>close</mat-icon>
+    </div>
+  </div>
+
+</div>
