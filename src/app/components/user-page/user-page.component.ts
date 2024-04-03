@@ -5,9 +5,13 @@ import { User } from "../../models/user.model";
 import { MatIcon } from "@angular/material/icon";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatCard } from "@angular/material/card";
-import { NgIf, NgOptimizedImage } from "@angular/common";
+import {AsyncPipe, NgIf, NgOptimizedImage} from "@angular/common";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
 import { Location } from '@angular/common';
+import {Store} from "@ngrx/store";
+import {AppState} from "../../store/app.state";
+import {getUser} from "../../store/users.actions";
+import {selectAllUsers, selectUser} from "../../store/users.selectors";
 
 @Component({
   selector: 'app-user-page',
@@ -19,29 +23,22 @@ import { Location } from '@angular/common';
     MatCard,
     NgOptimizedImage,
     NgIf,
-    MatProgressSpinner
+    MatProgressSpinner,
+    AsyncPipe
   ],
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.scss'
 })
 export class UserPageComponent implements OnInit{
 
-  userId: number;
+  loadedUser$ = this.store.select(selectUser);
 
-  loadedUser: User;
-
-  constructor(private route: ActivatedRoute, private userService: UserService, public location: Location) {
+  constructor(private route: ActivatedRoute, private store: Store<AppState>, public location: Location) {
   }
 
   ngOnInit(): void {
-
-    this.userId = Number.parseInt(this.route.snapshot.paramMap?.get('id') || '1');
-
-    this.userService.getUser(this.userId).subscribe(user => {
-      this.loadedUser = user;
-    })
-
+    const userId = Number.parseInt(this.route.snapshot.paramMap?.get('id') || '1');
+    this.store.dispatch(getUser({id: userId}))
   }
-
 
 }

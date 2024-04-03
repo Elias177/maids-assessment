@@ -1,16 +1,30 @@
 import { createReducer, on } from '@ngrx/store';
 import { User } from "../models/user.model";
-import {AppState} from "./app.state";
-import {fetchUsers, fetchUsersSuccess, getUser, getUserSuccess} from "./users.actions";
+import {
+  fetchUsers,
+  fetchUsersSuccess,
+  getPage,
+  getUser,
+  getUserSuccess,
+  nextPage,
+  previousPage,
+  totalPages
+} from "./users.actions";
 
 export interface UsersState {
   users: User[],
+  selectedUserId: number;
   selectedUser: User | null;
+  page: number;
+  totalPages: number;
 }
 
 export const initialState: UsersState = {
   users: [],
-  selectedUser: null
+  selectedUserId: 0,
+  selectedUser: null,
+  page: 1,
+  totalPages: 1
 };
 
 export const usersReducer = createReducer(
@@ -20,10 +34,29 @@ export const usersReducer = createReducer(
     ...state,
     users: users
   })),
-  on(getUser, (state) => ({...state})),
-  on(getUserSuccess, (state, { id }) => ({
+  on(getUser, (state, {id}) => ({
     ...state,
-    selectedUser: state.users.find((user: User) => user.id === id) || null
+    selectedUserId: id
+  })),
+  on(getUserSuccess, (state, { user }) => ({
+    ...state,
+    selectedUser: user
+  })),
+  on(getPage, (state, { page }) => ({
+    ...state,
+    page: page
+  })),
+  on(totalPages, (state, { page }) => ({
+    ...state,
+    totalPages: page
+  })),
+  on(nextPage, (state) => ({
+    ...state,
+    page: state.page + 1
+  })),
+  on(previousPage, (state) => ({
+    ...state,
+    page: state.page - 1
   }))
 );
 

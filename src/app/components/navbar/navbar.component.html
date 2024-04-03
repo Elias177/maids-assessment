@@ -1,10 +1,10 @@
-<div class="navbar py-4 sm:py-12" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+<div class="navbar py-4 sm:py-12 mat-elevation-z1" matAutocompleteOrigin #origin="matAutocompleteOrigin">
 
   <div class="content-wrapper flex flew-row items-center gap-4 sm:gap-6 h-full">
 
-    <a [class.fade-out-left]="isTyping" class="cursor-pointer" [routerLink]="['']" [queryParams]="{page: '1'}">
-      <img class="relative hidden sm:block" ngSrc="assets/logos/maids-logo.svg" width="245" height="72" alt="Maids.cc">
-      <img class="relative block sm:hidden" ngSrc="assets/logos/logo.svg" width="50" height="48" alt="Maids.cc">
+    <a [class.fade-out-left]="isTyping" class="cursor-pointer" (click)="goHome()">
+      <img class="relative hidden sm:block" ngSrc="assets/logos/maids-logo.svg" width="245" height="72" priority alt="Maids.cc">
+      <img class="relative block sm:hidden" ngSrc="assets/logos/logo.svg" width="50" height="48" priority alt="Maids.cc">
     </a>
 
     <form #searchInput class="relative w-full flex flex-row items-center">
@@ -29,6 +29,8 @@
       </mat-autocomplete>
       <mat-icon *ngIf="textPresent" (click)="clearInput(searchInput)" class="search-bar-icon close" matIconPrefix>close</mat-icon>
     </form>
+
   </div>
 
 </div>
+<mat-progress-bar *ngIf="searching" mode="indeterminate"></mat-progress-bar>

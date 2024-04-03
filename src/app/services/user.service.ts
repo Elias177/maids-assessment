@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {User} from "../models/user.model";
-import {catchError, map, Observable, Subject, throwError} from "rxjs";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import { map, Observable} from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Store } from "@ngrx/store";
+import { UsersState } from "../store/users.reducer";
+import { getPage, totalPages } from "../store/users.actions";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  currentPage = new Subject();
-  totalPages = new Subject();
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userStore: Store<UsersState>) { }
 
   getUsers(page: number): Observable<User[]> {
     return this.http.get<any>(
@@ -22,10 +22,9 @@ export class UserService {
       })
       .pipe(map((data) => {
 
-        this.currentPage.next(data.page);
 
-        this.totalPages.next(data.total_pages);
-
+        this.userStore.dispatch(totalPages({page: data.total_pages}));
+        this.userStore.dispatch(getPage({page: data.page}));
         sessionStorage.setItem('page', data.page);
 
         return data.data || [];
@@ -44,28 +43,4 @@ export class UserService {
       .pipe(map((user) => user.data || {}));
   }
 
-  getUserPromise(id: number): Promise<User> {
-    console.log(id)
-    return new Promise(resolve => {
-      this.http.get<{ data: User }>(
-        'https://reqres.in/api/users', {
-          params: {
-            id: id
-          }
-        }
-      ).subscribe(value => {
-        resolve(value.data);
-      })
-    })
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('An error occurred:', error.error);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
-  }
 }

@@ -1,4 +1,4 @@
-import {createAction, createActionGroup, props} from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { User } from "../models/user.model";
 
 export const fetchUsers = createAction(
@@ -11,10 +11,29 @@ export const fetchUsersSuccess = createAction(
 );
 
 export const getUser = createAction(
-  'Getting one user from User API'
+  'Getting one user from User API',
+  props<{ id: number }>()
 );
 
 export const getUserSuccess = createAction(
   'Load from User page',
-   props<{ id: number }>()
+   props<{ user: User }>()
+);
+
+export const getPage = createAction(
+  'Getting current Page',
+  props<{ page: number} >()
+);
+
+export const totalPages = createAction(
+  'Setting total Pages',
+  props<{ page: number} >()
+);
+
+export const nextPage = createAction(
+  'Getting next Page'
+);
+
+export const previousPage = createAction(
+  'Getting previous Page'
 );

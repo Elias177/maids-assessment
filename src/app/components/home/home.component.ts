@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from "../../services/user.service";
-import { fetchUsers } from "../../store/users.actions";
+import {fetchUsers, getPage} from "../../store/users.actions";
 import {selectAllUsers, selectUsers} from "../../store/users.selectors";
 import { UserCardComponent } from "./user-card/user-card.component";
 import { UserListComponent } from "./user-list/user-list.component";
@@ -38,7 +38,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+    const storedPage = sessionStorage.getItem('page');
+
+    if (storedPage) {
+      this.store.dispatch(getPage({page: Number.parseInt(storedPage)}));
+    }
+
     this.store.dispatch(fetchUsers());
+
+
 
     /*this.page = Number.parseInt(this.route.snapshot.queryParamMap.get('page') || '1');
 

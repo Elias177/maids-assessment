@@ -2,7 +2,7 @@
 
   <div class="text-l sm:text-2xl font-bold mb-2 sm:mb-4">Available Maids:</div>
 
-  <app-user-list (pagination)="paginate($event)" [totalPages]="userService.totalPages | async" [page]="userService.currentPage | async" [users]="(users$ | async)!"></app-user-list>
+  <app-user-list (pagination)="paginate($event)" [users]="(users$ | async)!"></app-user-list>
 
 </div>
 
