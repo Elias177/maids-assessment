@@ -5,7 +5,11 @@
 }
 
 .big-btn {
-
   transform: scale(1.5);
+}
 
+.avatar-container {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
 }

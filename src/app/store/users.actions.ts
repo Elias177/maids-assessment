@@ -14,6 +14,18 @@ export const getUser = createAction(
   'Getting one user from User API',
   props<{ id: number }>()
 );
+export const searchForUser = createAction(
+  'Searching for one user from User API',
+  props<{ id: number }>()
+);
+export const searchUserSuccess = createAction(
+  'Found user',
+  props<{ user: User }>()
+);
+
+export const clearSearch = createAction(
+  'Clearing Search'
+);
 
 export const getUserSuccess = createAction(
   'Load from User page',

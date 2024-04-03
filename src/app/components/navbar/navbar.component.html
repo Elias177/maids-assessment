@@ -1,4 +1,6 @@
-<div class="navbar py-4 sm:py-12 mat-elevation-z1" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+<div class="navbar py-4 sm:py-12 mat-elevation-z1"
+     matAutocompleteOrigin
+     #origin="matAutocompleteOrigin">
 
   <div class="content-wrapper flex flew-row items-center gap-4 sm:gap-6 h-full">
 
@@ -8,9 +10,7 @@
     </a>
 
     <form #searchInput class="relative w-full flex flex-row items-center">
-
       <mat-icon class="search-bar-icon search" matIconPrefix>search</mat-icon>
-
       <input (focus)="typing(true)"
              (blur)="typing(false)"
              class="search-bar roboto"
@@ -20,17 +20,22 @@
              [matAutocomplete]="auto"
              [matAutocompleteConnectedTo]="origin"
       >
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete [class.hidden]="!isTyping" #auto="matAutocomplete">
         @for (option of options | async; track option) {
-          <a [routerLink]="['/user', option.id]">
-            <mat-option [value]="option">{{option.first_name + ' ' + option.last_name}}</mat-option>
+          <a *ngIf="option" [class.pointer-events-none]="option.id === 0" (click)="goToUser(option.id)">
+            <mat-option >{{option.first_name + ' ' + option.last_name}}</mat-option>
           </a>
         }
       </mat-autocomplete>
-      <mat-icon *ngIf="textPresent" (click)="clearInput(searchInput)" class="search-bar-icon close" matIconPrefix>close</mat-icon>
+      <mat-icon *ngIf="textPresent"
+                (click)="clearInput(searchInput)"
+                class="search-bar-icon close"
+                matIconPrefix>
+        close
+      </mat-icon>
     </form>
 
   </div>
-
 </div>
+
 <mat-progress-bar *ngIf="searching" mode="indeterminate"></mat-progress-bar>

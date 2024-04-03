@@ -11,7 +11,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { usersReducer } from "./store/users.reducer";
 import { provideHttpClient } from "@angular/common/http";
 import { provideEffects } from '@ngrx/effects';
-import {UsersEffects} from "./store/users.effects";
+import { UsersEffects } from "./store/users.effects";
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 const scrollConfig: InMemoryScrollingOptions = {
@@ -20,7 +20,6 @@ const scrollConfig: InMemoryScrollingOptions = {
 };
 
 const inMemoryScrollingFeature: InMemoryScrollingFeature = withInMemoryScrolling(scrollConfig);
-
 
 export const appConfig: ApplicationConfig = {
   providers: [

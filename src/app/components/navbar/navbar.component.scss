@@ -10,7 +10,6 @@
   z-index: 2;
 }
 
-
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
@@ -18,6 +17,14 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+input[type=number]:focus-visible {
+  outline-color: $maids-blue;;
+}
+
+input[type=number]:focus {
+  outline-color: $maids-blue;;
 }
 
 .search-bar {

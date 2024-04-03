@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserCardComponent } from "../user-card/user-card.component";
 import { CommonModule } from "@angular/common";
 import { User } from "../../../models/user.model";
@@ -25,21 +25,20 @@ import { AppState } from "../../../store/app.state";
 export class UserListComponent {
 
   @Input() users: User[];
-  @Output() pagination = new EventEmitter();
   public page$ = this.store.select(selectCurrentPage);
   public totalPage$ = this.store.select(selectTotalPages);
+  public pagination:boolean;
 
   constructor(public store: Store<AppState>) {
   }
 
   paginate(next: boolean) {
-
+    this.pagination = next;
     if (next) {
       this.store.dispatch(nextPage())
     } else {
       this.store.dispatch(previousPage())
     }
     this.store.dispatch(fetchUsers())
-
   }
 }

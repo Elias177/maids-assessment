@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatToolbar } from "@angular/material/toolbar";
 import { MatIcon } from "@angular/material/icon";
 import { AsyncPipe, NgIf, NgOptimizedImage } from "@angular/common";
-import { MatFormFieldModule, MatLabel, MatPrefix } from "@angular/material/form-field";
+import { MatLabel, MatPrefix } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from "@angular/router";
-import {selectAllUsers, selectUser } from "../../store/users.selectors";
+import { searchUser } from "../../store/users.selectors";
 import { Store } from "@ngrx/store";
 import {
   MatAutocomplete,
@@ -14,8 +13,7 @@ import {
   MatOption
 } from "@angular/material/autocomplete";
 import { debounceTime, map, Observable } from "rxjs";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { fetchUsers, getUser } from "../../store/users.actions";
+import {clearSearch, getUser, searchForUser} from "../../store/users.actions";
 import { AppState } from "../../store/app.state";
 import { MatProgressBar } from "@angular/material/progress-bar";
 
@@ -23,9 +21,7 @@ import { MatProgressBar } from "@angular/material/progress-bar";
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    MatToolbar,
     MatIcon,
-    MatFormFieldModule,
     MatInputModule,
     NgOptimizedImage,
     MatLabel,
@@ -34,9 +30,7 @@ import { MatProgressBar } from "@angular/material/progress-bar";
     MatAutocomplete,
     AsyncPipe,
     MatOption,
-    ReactiveFormsModule,
     MatAutocompleteTrigger,
-    FormsModule,
     NgIf,
     MatAutocompleteOrigin,
     MatProgressBar,
@@ -47,8 +41,7 @@ import { MatProgressBar } from "@angular/material/progress-bar";
 export class NavbarComponent implements OnInit {
 
   isTyping = false;
-  public users$ = this.store.select(selectAllUsers);
-  public user$ = this.store.select(selectUser);
+  public user$ = this.store.select(searchUser);
   options: Observable<any>;
   textPresent = false;
   searching = false;
@@ -57,29 +50,41 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(fetchUsers());
   }
 
   public filterUsers(ev: any) {
     this.searching = true;
-    this.options = this.users$.pipe(debounceTime(500), map((users) => {
+    const searchValue = Number.parseInt(ev.value);
+    if (Number.isNaN(searchValue)) {
+      return;
+    }
+    this.store.dispatch(searchForUser({id: searchValue}))
+    this.options = this.user$.pipe(debounceTime(500), map((user) => {
       this.textPresent = ev.value.length > 0;
-      const searchValue = Number.parseInt(ev.value);
       this.searching = false;
-      return users.filter(user => user.id === searchValue)
+      return [user]
     }));
   }
 
   public typing(typing: boolean) {
     this.isTyping = typing;
+    if (!typing) {
+      this.store.dispatch(clearSearch());
+    }
   }
 
   clearInput(searchInput: HTMLFormElement) {
+    this.store.dispatch(clearSearch());
     searchInput.reset();
     this.textPresent = false;
   }
 
   goHome() {
     this.router.navigate([''])
+  }
+
+  goToUser(id: number) {
+    this.store.dispatch(getUser({id: id}))
+    this.router.navigate(['user', id])
   }
 }

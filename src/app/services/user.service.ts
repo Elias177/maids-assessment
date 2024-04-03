@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {User} from "../models/user.model";
-import { map, Observable} from "rxjs";
+import { User } from "../models/user.model";
+import { map, Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngrx/store";
 import { UsersState } from "../store/users.reducer";
@@ -21,14 +21,10 @@ export class UserService {
         }
       })
       .pipe(map((data) => {
-
-
         this.userStore.dispatch(totalPages({page: data.total_pages}));
         this.userStore.dispatch(getPage({page: data.page}));
         sessionStorage.setItem('page', data.page);
-
         return data.data || [];
-
       }));
   }
 
@@ -39,8 +35,7 @@ export class UserService {
           id: id
         }
       }
-    )
-      .pipe(map((user) => user.data || {}));
+    ).pipe(map((user) => user.data || {}));
   }
 
 }

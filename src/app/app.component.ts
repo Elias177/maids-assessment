@@ -10,5 +10,4 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'Maids.cc - Active Maids Database';
 }

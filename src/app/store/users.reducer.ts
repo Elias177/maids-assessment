@@ -1,20 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
 import { User } from "../models/user.model";
 import {
+  clearSearch,
   fetchUsers,
   fetchUsersSuccess,
   getPage,
   getUser,
   getUserSuccess,
   nextPage,
-  previousPage,
+  previousPage, searchForUser, searchUserSuccess,
   totalPages
 } from "./users.actions";
 
 export interface UsersState {
   users: User[],
   selectedUserId: number;
+  searchedUserId: number;
   selectedUser: User | null;
+  searchedUser: User | null;
   page: number;
   totalPages: number;
 }
@@ -22,7 +25,9 @@ export interface UsersState {
 export const initialState: UsersState = {
   users: [],
   selectedUserId: 0,
+  searchedUserId: 0,
   selectedUser: null,
+  searchedUser: null,
   page: 1,
   totalPages: 1
 };
@@ -41,6 +46,19 @@ export const usersReducer = createReducer(
   on(getUserSuccess, (state, { user }) => ({
     ...state,
     selectedUser: user
+  })),
+  on(searchForUser, (state, {id}) => ({
+    ...state,
+    searchedUserId: id
+  })),
+  on(searchUserSuccess, (state, { user }) => ({
+    ...state,
+    searchedUser: user
+  })),
+  on(clearSearch, (state) => ({
+    ...state,
+    searchedUserId: 0,
+    searchedUser: null
   })),
   on(getPage, (state, { page }) => ({
     ...state,

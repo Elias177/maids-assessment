@@ -1,7 +1,7 @@
 <div *ngIf="(loadedUser$ | async)" class="slide-in-left content-wrapper mt-2 sm:mt-4 ">
 
   <div class="flex flex-row relative sm:absolute mt-4 sm:mt-1">
-    <button (click)="location.back()" color="primary" mat-icon-button class="flex flex-col justify-center big-btn">
+    <button (click)="goBack()" color="primary" mat-icon-button class="flex flex-col justify-center big-btn">
       <mat-icon>arrow_backward</mat-icon>
     </button>
   </div>
@@ -14,9 +14,9 @@
         Maid ID: {{(loadedUser$ | async)?.id}}
       </div>
 
-      <div class="avatar-container">
+      <div>
 
-        <img class="rounded-full" [ngSrc]="$any(loadedUser$ | async)?.avatar" width="128" height="128" alt="avatar">
+        <img class="rounded-full avatar-container" [ngSrc]="$any(loadedUser$ | async)?.avatar" width="128" height="128" alt="avatar">
 
       </div>
 
