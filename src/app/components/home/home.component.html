@@ -1,5 +1,13 @@
-<div class="mt-4">
+<div *ngIf="users$" class="mt-2 sm:mt-4 fade-in">
 
-  <app-user-list [users]="(users$ | async)!"></app-user-list>
+  <div class="text-l sm:text-2xl font-bold mb-2 sm:mb-4">Available Maids:</div>
+
+  <app-user-list (pagination)="paginate($event)" [totalPages]="userService.totalPages | async" [page]="userService.currentPage | async" [users]="(users$ | async)!"></app-user-list>
+
+</div>
+
+<div *ngIf="!users$" class="flex flex-col justify-center items-center h-screen">
+
+  <mat-spinner color="accent"></mat-spinner>
 
 </div>

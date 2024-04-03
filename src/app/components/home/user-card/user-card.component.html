@@ -4,7 +4,7 @@
 
     <div mat-card-avatar class="bg-cover" [style]="{'background-image': 'url(' + user.avatar + ')'}"></div>
     <mat-card-title [innerHTML]="user.first_name + ' ' + user.last_name"></mat-card-title>
-    <mat-card-subtitle>ID: {{user.id}}</mat-card-subtitle>
+    <mat-card-subtitle>Maid ID: {{user.id}}</mat-card-subtitle>
 
   </mat-card-header>
 
@@ -16,7 +16,16 @@
   </mat-card-content>
 
   <div class="details-btn-container flex flex-row justify-end items-center">
-    <button mat-flat-button color="primary">Details</button>
+    <a [routerLink]="['/user', user.id]">
+      <button mat-flat-button color="primary">
+        <div class="flex flex-row items-center">
+          <span class="mr-1">Details</span>
+          <mat-icon matIconSuffix>arrow_forward</mat-icon>
+        </div>
+
+      </button>
+    </a>
+
   </div>
 
 </mat-card>
